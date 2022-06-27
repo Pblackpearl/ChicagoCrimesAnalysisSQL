@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?><sqlb_project><db path="C:/Users/Pam/OneDrive/Desktop/SQL/chicago_projects_csv_sql.db" readonly="0" foreign_keys="1" case_sensitive_like="0" temp_store="0" wal_autocheckpoint="1000" synchronous="2"/><attached/><window><main_tabs open="browser pragmas query structure" current="2"/></window><tab_structure><column_width id="0" width="300"/><column_width id="1" width="0"/><column_width id="2" width="125"/><column_width id="3" width="17891"/><column_width id="4" width="0"/><expanded_item id="0" parent="1"/><expanded_item id="1" parent="1"/><expanded_item id="2" parent="1"/><expanded_item id="3" parent="1"/></tab_structure><tab_browse><current_table name="4,22:mainChicago_Public_Schools"/><default_encoding codec=""/><browse_table_settings><table schema="main" name="Census_Data" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="262"/><column index="2" value="237"/><column index="3" value="283"/><column index="4" value="300"/><column index="5" value="290"/><column index="6" value="300"/><column index="7" value="300"/><column index="8" value="199"/><column index="9" value="170"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Chicago_Crime_Data" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="79"/><column index="2" value="140"/><column index="3" value="140"/><column index="4" value="300"/><column index="5" value="54"/><column index="6" value="300"/><column index="7" value="300"/><column index="8" value="300"/><column index="9" value="77"/><column index="10" value="101"/><column index="11" value="54"/><column index="12" value="93"/><column index="13" value="64"/><column index="14" value="262"/><column index="15" value="87"/><column index="16" value="148"/><column index="17" value="147"/><column index="18" value="55"/><column index="19" value="140"/><column index="20" value="102"/><column index="21" value="113"/><column index="22" value="245"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table><table schema="main" name="Chicago_Public_Schools" show_row_id="0" encoding="" plot_x_axis="" unlock_view_pk="_rowid_"><sort/><column_widths><column index="1" value="89"/><column index="2" value="300"/><column index="3" value="279"/><column index="4" value="223"/><column index="5" value="65"/><column index="6" value="55"/><column index="7" value="83"/><column index="8" value="132"/><column index="9" value="300"/><column index="10" value="300"/><column index="11" value="300"/><column index="12" value="276"/><column index="13" value="134"/><column index="14" value="258"/><column index="15" value="248"/><column index="16" value="274"/><column index="17" value="104"/><column index="18" value="142"/><column index="19" value="214"/><column index="20" value="223"/><column index="21" value="158"/><column index="22" value="167"/><column index="23" value="145"/><column index="24" value="154"/><column index="25" value="116"/><column index="28" value="134"/><column index="29" value="212"/><column index="30" value="221"/><column index="31" value="214"/><column index="32" value="223"/><column index="33" value="300"/><column index="34" value="300"/><column index="35" value="245"/><column index="36" value="300"/><column index="37" value="137"/><column index="38" value="112"/><column index="39" value="218"/><column index="40" value="218"/><column index="41" value="205"/><column index="42" value="205"/><column index="43" value="218"/><column index="44" value="218"/><column index="45" value="205"/><column index="46" value="205"/><column index="47" value="175"/><column index="48" value="175"/><column index="49" value="201"/><column index="50" value="228"/><column index="51" value="175"/><column index="52" value="175"/><column index="53" value="220"/><column index="54" value="220"/><column index="55" value="230"/><column index="56" value="239"/><column index="57" value="228"/><column index="58" value="228"/><column index="59" value="207"/><column index="60" value="207"/><column index="61" value="260"/><column index="62" value="264"/><column index="63" value="215"/><column index="64" value="172"/><column index="65" value="165"/><column index="66" value="225"/><column index="67" value="214"/><column index="68" value="198"/><column index="69" value="221"/><column index="70" value="148"/><column index="71" value="147"/><column index="72" value="102"/><column index="73" value="108"/><column index="74" value="262"/><column index="75" value="237"/><column index="76" value="55"/><column index="77" value="123"/><column index="78" value="227"/></column_widths><filter_values/><conditional_formats/><row_id_formats/><display_formats/><hidden_columns/><plot_y_axes/><global_filter/></table></browse_table_settings></tab_browse><tab_sql><sql name="Prob1">-- Find the total number of crimes recorded in the CRIME table
+SELECT COUNT(*) AS CrimeCount 
+ FROM Chicago_Crime_Data;</sql><sql name="Prob2">-- Retrieve first 10 rows from the CRIME table
+SELECT *
+ FROM Chicago_Crime_Data
+ LIMIT 10;</sql><sql name="Prob3">-- How many crimes involve an arrest?
+SELECT COUNT(*) AS ArrestCount
+ FROM Chicago_Crime_Data
+ WHERE ARREST = 'TRUE';</sql><sql name="Prob4">-- Which unique types of crimes have been recorded at GAS STATION locations?
+SELECT DISTINCT (PRIMARY_TYPE) AS GasStationCrimes
+ FROM Chicago_Crime_Data
+ WHERE LOCATION_DESCRIPTION = 'GAS STATION';
+</sql><sql name="Prob5">-- In the CENUS_DATA table list all Community Areas whose names start with the letter ‘B’
+SELECT COMMUNITY_AREA_NAME
+	FROM Census_Data 
+	WHERE COMMUNITY_AREA_NAME LIKE 'B%';</sql><sql name="Prob6">-- Which schools in Community Areas 10 to 15 are healthy school certified?
+SELECT CPS.COMMUNITY_AREA_NAME,
+	CPS.COMMUNITY_AREA_NUMBER,
+	CPS.NAME_OF_SCHOOL,
+	CPS.HEALTHY_SCHOOL_CERTIFIED 
+	FROM Chicago_Public_Schools AS CPS
+	JOIN Census_Data AS CD
+	ON CD.COMMUNITY_AREA_NUMBER = CPS.COMMUNITY_AREA_NUMBER
+	WHERE CD.COMMUNITY_AREA_NUMBER BETWEEN 10 AND 15 AND
+	CPS.HEALTHY_SCHOOL_CERTIFIED = 'Yes';		</sql><sql name="Prob7">-- What is the average school Safety Score?
+SELECT AVG (SAFETY_SCORE) AS average_safety_scores
+	FROM Chicago_Public_Schools;</sql><sql name="Prob8">-- List the top 5 Community Areas by average College Enrollment [number of students]
+SELECT COMMUNITY_AREA_NAME, AVG (COLLEGE_ENROLLMENT) AS Average_College_Enrollment
+	FROM Chicago_Public_Schools
+	GROUP BY COMMUNITY_AREA_NAME
+	ORDER BY Average_College_Enrollment DESC LIMIT 5;
+	</sql><sql name="Prob9">-- Use a sub-query to determine which Community Area has the least value for school Safety Score?
+SELECT COMMUNITY_AREA_NAME, SAFETY_SCORE
+	FROM Chicago_Public_Schools
+	WHERE SAFETY_SCORE = (SELECT MIN(SAFETY_SCORE) FROM Chicago_Public_Schools);</sql><current_tab id="8"/></tab_sql></sqlb_project>
